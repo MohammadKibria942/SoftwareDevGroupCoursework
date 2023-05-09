@@ -1,25 +1,23 @@
-
 <?php
 	header('Access-Control-Allow-Origin: *');
 	$nhsNo = $_POST['NhsNo'];
-	$notFound = "no records";
 
 	
-	$pdo = new \PDO("sqlite: vaccines.db");
-	$st = $pdo->query("SELECT * from patients where NHSNumber='".$nhsNo."'");
+	$pdo = new \PDO("sqlite: GPSurgery.db");//Change to GPSurgery.db
+	$st = $pdo->query("SELECT * from registeredPatientRecords where NHSNumber='".$nhsNo."'");
      
     $st->execute();
-	$cars = [];//chaneg this
+	$records = [];
 	
-	while ($car = $st->fetchObject()) {
-		$cars[]=$car;
+	while ($record = $st->fetchObject()) {
+		$records[]=$record;
 		
     }
-	if(empty($cars)){
+	if(empty($records)){
 		echo json_encode(0);
 	}
 	else
 	{
-		echo json_encode($cars);
+		echo json_encode($records);
 	}
 ?>
